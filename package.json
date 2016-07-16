@@ -1,0 +1,25 @@
+{
+  "name": "generate-snippet",
+  "description": "Generate a file or code snippet from a user-defined template.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/generate-snippet",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/generate-snippet",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/generate-snippet/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "generate",
+    "snippet"
+  ],
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  }
+}
