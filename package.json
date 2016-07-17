@@ -2,24 +2,93 @@
   "name": "generate-snippet",
   "description": "Generate a file or code snippet from a user-defined template.",
   "version": "0.1.0",
-  "homepage": "https://github.com/jonschlinkert/generate-snippet",
+  "homepage": "https://github.com/generate/generate-snippet",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
-  "repository": "jonschlinkert/generate-snippet",
+  "repository": "generate/generate-snippet",
   "bugs": {
-    "url": "https://github.com/jonschlinkert/generate-snippet/issues"
+    "url": "https://github.com/generate/generate-snippet/issues"
   },
   "license": "MIT",
+  "files": [
+    "generator.js",
+    "index.js",
+    "LICENSE"
+  ],
+  "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --reporter spec --bail"
+  },
+  "dependencies": {
+    "extend-shallow": "^2.0.1",
+    "generate-defaults": "^0.4.1",
+    "gulp-choose-files": "^0.1.3",
+    "is-valid-app": "^0.2.0",
+    "mixin-deep": "^1.1.3"
+  },
+  "devDependencies": {
+    "delete": "^0.3.2",
+    "generate": "^0.9.8",
+    "global-modules": "^0.2.2",
+    "gulp-format-md": "^0.1.9",
+    "mocha": "^2.5.3",
+    "npm-install-global": "^0.1.2"
   },
   "keywords": [
+    "boilerplate",
+    "build",
+    "cli",
+    "cli-app",
+    "command-line",
+    "create",
+    "dev",
+    "development",
+    "framework",
+    "front",
+    "frontend",
     "generate",
-    "snippet"
+    "generate-generator",
+    "generate-plugin",
+    "generategenerator",
+    "generateplugin",
+    "generator",
+    "init",
+    "initialize",
+    "new",
+    "plugin",
+    "project",
+    "projects",
+    "scaffold",
+    "scaffolder",
+    "scaffolding",
+    "snippet",
+    "template",
+    "templates",
+    "webapp",
+    "yeoman",
+    "yo"
   ],
-  "devDependencies": {
-    "mocha": "^2.5.3"
+  "verb": {
+    "toc": true,
+    "layout": "common-minimal",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "reflinks": [
+      "assemble",
+      "base",
+      "generate",
+      "gulp",
+      "verb",
+      "verb-generate-readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
