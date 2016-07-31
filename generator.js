@@ -49,8 +49,11 @@ module.exports = function(app) {
   });
 
   /**
-   * Prompts you to choose a snippet to generate to the current working directory
-   * or specified `--dest`.
+   * Prompts you to choose a snippet from `~/snippets/templates` to generate to
+   * the current working directory or specified `--dest`. You can optionally store
+   * default data to use for rendering templates in `~/snippets/data`, where the
+   * name of each `.json` file matches the name of a snippet. General data can
+   * be stored in `~/snippets/data/data.json`.
    *
    * ```sh
    * $ gen snippet
