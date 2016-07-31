@@ -14,14 +14,12 @@ module.exports = function(app) {
    */
 
   app.use(require('generate-defaults'));
-  app.fillin('snippets', 'snippets/templates');
-
-  // app.onStream(/./, function(file, next) {
-  //   if (app.cache.data.hasOwnProperty(file.stem)) {
-  //     file.data = merge({}, app.cache.data[file.stem], file.data);
-  //   }
-  //   next();
-  // });
+  app.onStream(/./, function(file, next) {
+    if (app.cache.data.hasOwnProperty(file.stem)) {
+      file.data = merge({}, app.cache.data[file.stem], file.data);
+    }
+    next();
+  });
 
   /**
    * Create the `snippets` collection, then load snippets from
@@ -29,6 +27,7 @@ module.exports = function(app) {
    */
 
   app.task('snippets-load', function(cb) {
+    app.fillin('snippets', 'snippets/templates');
     app.create('snippets', {cwd: app.home(app.options.snippets)});
     app.snippets(app.options.file || '*');
     cb();
@@ -39,21 +38,34 @@ module.exports = function(app) {
    */
 
   app.task('snippets-data', function(cb) {
+    app.fillin('snippets', 'snippets/templates');
     app.data(app.home(app.options.snippets, '../data/*.json'));
+    if (app.has('cache.data.data')) {
+      var data = app.data('data');
+      app.del('cache.data.data');
+      app.data(data);
+    }
     cb();
   });
 
   /**
-   * Generate a snippet.
+   * Prompts you to choose a snippet to generate to the current working directory
+   * or specified `--dest`.
+   *
+   * ```sh
+   * $ gen snippet
+   * ```
+   * @name snippet
+   * @api public
    */
 
   app.task('snippet', ['snippets-data', 'snippets-load'], function() {
     app.option('askWhen', 'always');
     return app.toStream('snippets')
-      .pipe(choose(app.options)).on('error', console.log)
-      .pipe(app.renderFile('*')).on('error', console.log)
-      .pipe(app.conflicts(app.cwd)).on('error', console.log)
-      .pipe(app.dest(app.cwd)).on('error', console.log)
+      .pipe(choose(app.options))
+      .pipe(app.renderFile('*'))
+      .pipe(app.conflicts(app.cwd))
+      .pipe(app.dest(app.cwd));
   });
 
   app.task('default', ['snippet']);
