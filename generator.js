@@ -27,9 +27,9 @@ module.exports = function(app) {
    */
 
   app.task('snippets-load', function(cb) {
-    app.fillin('snippets', 'snippets/templates');
+    app.fillin('snippets', 'templates');
     app.create('snippets', {cwd: app.home(app.options.snippets)});
-    app.snippets(app.options.file || '*');
+    app.snippets(app.options.file || '*', {dot: true});
     cb();
   });
 
@@ -40,6 +40,7 @@ module.exports = function(app) {
   app.task('snippets-data', function(cb) {
     app.fillin('snippets', 'snippets/templates');
     app.data(app.home(app.options.snippets, '../data/*.json'));
+    // merge `data.json` object onto root
     if (app.has('cache.data.data')) {
       var data = app.data('data');
       app.del('cache.data.data');

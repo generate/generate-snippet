@@ -12,6 +12,7 @@ var pkg = require('../package');
 var generator = require('..');
 var app;
 
+var isTravis = process.env.CI || process.env.TRAVIS;
 var fixtures = path.resolve.bind(path, __dirname, 'fixtures');
 var actual = path.resolve.bind(path, __dirname, 'actual');
 
@@ -34,23 +35,10 @@ function exists(name, re, cb) {
   };
 }
 
-function symlink(dir, cb) {
-  var src = path.resolve(dir);
-  var name = path.basename(src);
-  var dest = path.resolve(gm, name);
-  fs.stat(dest, function(err, stat) {
-    if (err) {
-      fs.symlink(src, dest, cb);
-    } else {
-      cb();
-    }
-  });
-}
-
 describe('generate-snippet', function() {
   this.slow(150);
 
-  if (!process.env.CI && !process.env.TRAVIS) {
+  if (!isTravis) {
     before(function(cb) {
       npm.maybeInstall('generate', cb);
     });
@@ -87,25 +75,21 @@ describe('generate-snippet', function() {
     });
   });
 
-  if (!process.env.CI && !process.env.TRAVIS) {
-    describe('generator (CLI)', function() {
-      before(function(cb) {
-        symlink(__dirname, cb);
-      });
-
-      beforeEach(function() {
-        app.use(generator);
-      });
-
-      it('should run the default task using the `generate-snippet` name', function(cb) {
-        app.generate('generate-snippet', exists('example.txt', cb));
-      });
-
-      it('should run the default task using the `generator` generator alias', function(cb) {
-        app.generate('snippet', exists('example.txt', cb));
-      });
+  describe('generator (CLI)', function() {
+    beforeEach(function() {
+      app.use(generator);
     });
-  }
+
+    it('should run the default task using the `generate-snippet` name', function(cb) {
+      if (isTravis) return this.skip();
+      app.generate('generate-snippet', exists('example.txt', cb));
+    });
+
+    it('should run the default task using the `generator` generator alias', function(cb) {
+      if (isTravis) return this.skip();
+      app.generate('snippet', exists('example.txt', cb));
+    });
+  });
 
   describe('generator (API)', function() {
     it('should run the default task on the generator', function(cb) {
