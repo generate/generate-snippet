@@ -1,7 +1,7 @@
 {
   "name": "generate-snippet",
   "description": "Generate a file or code snippet from any user-defined template.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/generate/generate-snippet",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "generate/generate-snippet",
@@ -80,9 +80,9 @@
     ],
     "related": {
       "list": [
-        "generate-project",
+        "generate-gitignore",
         "generate-license",
-        "generate-gitignore"
+        "generate-project"
       ]
     },
     "reflinks": [
